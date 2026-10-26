@@ -1,0 +1,17 @@
+# OS Files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+*~
+*.bak
+
+# Node & Python caches
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
