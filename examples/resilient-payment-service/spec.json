@@ -1,0 +1,42 @@
+{
+  "serviceName": "ResilientPaymentService",
+  "version": "1.0.0",
+  "description": "Yapay zeka modellerine referans olarak hazirlanmis, tam guvenilirlikli ve degismez garantili odeme servisi spesifikasyonu.",
+  "contracts": {
+    "PaymentRequest": {
+      "type": "object",
+      "required": ["idempotencyKey", "orderId", "amountCents", "currency"],
+      "properties": {
+        "idempotencyKey": { "type": "string", "format": "uuid" },
+        "orderId": { "type": "string" },
+        "amountCents": { "type": "integer", "minimum": 1 },
+        "currency": { "type": "string", "enum": ["TRY", "USD", "EUR"] }
+      }
+    },
+    "PaymentResponse": {
+      "type": "object",
+      "required": ["transactionId", "status", "orderId", "processedAt"],
+      "properties": {
+        "transactionId": { "type": "string" },
+        "status": { "type": "string", "enum": ["SUCCESS", "FAILED", "ALREADY_PROCESSED"] },
+        "orderId": { "type": "string" },
+        "processedAt": { "type": "string" }
+      }
+    }
+  },
+  "invariants": [
+    "amountCents daima sifirdan buyuk tam sayi olmalidir.",
+    "Ayni idempotencyKey ile gelen istekler ASLA tekrar tahsilat yapamaz, onceki sonucun aynisini doner.",
+    "Bir siparis (orderId) ayni anda yalnizca tek bir islem threadi tarafindan islenebilir (Distributed Lock).",
+    "Durum gecisleri deterministiktir: INITIAL -> PROCESSING -> COMPLETED veya FAILED."
+  ],
+  "failureModes": [
+    "Ağ hatasi / Zaman asimi: Exponential backoff ile en fazla 3 deneme.",
+    "Banka kesintisi: Circuit breaker acilir ve islem askiya alinir.",
+    "Idempotency cakismasi: Yan etki uretilmez, ilk kayit dondurulur."
+  ],
+  "acceptanceCriteria": [
+    "Eşzamanli 100 istekte sifir cift cekim (Zero double-spend).",
+    "Property-based testte 10.000 rastgele senaryoda degismezlerin %100 korunmasi."
+  ]
+}

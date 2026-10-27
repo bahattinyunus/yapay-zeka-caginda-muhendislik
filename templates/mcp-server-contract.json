@@ -1,0 +1,29 @@
+{
+  "name": "enterprise-orchestration-mcp",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) Uyumlu Ajan ve Sistem Arayüz Sözleşmesi",
+  "tools": [
+    {
+      "name": "verify_specification",
+      "description": "Verilen mimari şartnamenin eksiksizliğini ve değişmez kurallarını denetler.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "specPath": { "type": "string", "description": "Şartname markdown veya JSON dosya yolu" }
+        },
+        "required": ["specPath"]
+      }
+    },
+    {
+      "name": "run_guardrail_scan",
+      "description": "Üretilen kaynak kodda anti-pattern ve zafiyet taraması yapar.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "targetPath": { "type": "string", "description": "Taranacak kaynak dosya veya dizin" }
+        },
+        "required": ["targetPath"]
+      }
+    }
+  ]
+}

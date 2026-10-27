@@ -4,6 +4,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Manifesto Versiyonu](https://img.shields.io/badge/Manifesto-v3.0%20Magnus-purple.svg)](README.md)
 [![12 Yasa](https://img.shields.io/badge/Felsefe-12%20Orkestrasyon%20Yasas%C4%B1-gold.svg)](docs/12-orkestrasyon-yasasi.md)
+[![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD-Passing-success.svg)](.github/workflows/ci.yml)
+[![CLI Toolkit](https://img.shields.io/badge/CLI%20Ara%C3%A7lar%C4%B1-v1.0.0-blueviolet.svg)](#-orkestrasyon-cli-ve-doğrulama-araç-seti)
 [![Topluluk](https://img.shields.io/badge/Topluluk-GitHub%20Discussions-orange.svg)](#-katkıda-bulunma-ve-topluluk)
 
 ---
@@ -48,7 +50,9 @@
 7. [Uçtan Uca Orkestrasyon Topolojisi (Mermaid)](#-uçtan-uca-orkestrasyon-topolojisi)
 8. [Mühendisin Yeni Yetkinlik Anatomisi](#-mühendisin-yeni-yetkinlik-anatomisi)
 9. [Pratik Vaka Analizi: Çırak vs. Orkestra Şefi](#-pratik-vaka-analizi-çırak-vs-orkestra-şefi)
-10. [Modern Orkestratörün Araç Kutusu](#-modern-orkestratörün-araç-kutusu)
+10. [Orkestrasyon CLI ve Doğrulama Araç Seti](#-orkestrasyon-cli-ve-doğrulama-araç-seti)
+11. [Referans Uygulama: Resilient Payment Service](#-referans-uygulama-resilient-payment-service)
+12. [Modern Orkestratörün Araç Kutusu](#-modern-orkestratörün-araç-kutusu)
 11. [Ne Yapmalı, Neyi Bırakmalı?](#-ne-yapmalı-neyi-bırakmalı)
 12. [Klasikler ve Başvuru Kitaplığı](#-klasikler-ve-başvuru-kitaplığı)
 13. [Depo Mimarisi ve Şablonlar](#-depo-mimarisi-ve-şablonlar)
@@ -339,6 +343,41 @@ Bir e-ticaret sisteminde yüksek trafikli kupon kodu uygulama ve ödeme tamamlam
 
 ---
 
+## 🧰 Orkestrasyon CLI ve Doğrulama Araç Seti
+
+Bu depoda; yapay zekâ modellerinin ürettiği kodları ve şartnameleri deterministik olarak denetlemeniz için **Python tabanlı yerleşik bir araç kiti (CLI)** yer almaktadır.
+
+```bash
+# 1. Mimari şartnamenin olgunluğunu (kontrat, invariant, hata modu) denetleyin:
+python -m tools.cli validate-spec templates/spec-driven-template.md
+
+# 2. Üretilen koddaki amelelik kalıntılarını (TODO, secret, kör catch vb.) tarayın:
+python -m tools.cli scan-guardrails .
+
+# 3. 1.000 iterasyonluk deterministik eval ve property testini koşturun:
+python -m tools.cli run-evals
+
+# 4. Tüm kapıları (Spec + Guardrails + Evals) tek komutla çalıştırın:
+python -m tools.cli check-all
+```
+
+---
+
+## 🧪 Referans Uygulama: Resilient Payment Service
+
+Yapay zekâ modellerine *"nasıl kod üretmeleri gerektiğini"* göstermek için [`examples/resilient-payment-service/`](examples/resilient-payment-service/) altında çalışan somut bir referans mikroservis bulunmaktadır:
+
+- **[`spec.json`](examples/resilient-payment-service/spec.json):** OpenAPI / JSON Schema formatında API kontratları, değişmezler (invariants) ve arıza modları.
+- **[`service.py`](examples/resilient-payment-service/service.py):** Idempotency store, eşzamanlı kilit mekanizması (concurrency locking) ve katı durum makinesi içeren Python implemantasyonu.
+- **[`test_service.py`](examples/resilient-payment-service/test_service.py):** 50 eşzamanlı iş parçacığıyla (threads) çift çekimi (double-spend) ve veri yarışını (race condition) sınayan deterministik test paketi.
+
+Testleri çalıştırmak için:
+```bash
+python -m unittest examples/resilient-payment-service/test_service.py
+```
+
+---
+
 ## 🛠️ Modern Orkestratörün Araç Kutusu
 
 | Katman | Araçlar ve Standartlar | Ne İşe Yarar? |
@@ -387,18 +426,34 @@ Yapay zekâ çağında ayakta kalmak isteyen bir mühendisin başucunda durması
 
 ```
 .
+├── .github/
+│   └── workflows/ci.yml                     # Otomatik Test ve Doğrulama Hattı (GitHub Actions)
 ├── README.md                                # Ana Manifesto ve Sistem Vizyonu
 ├── CONTRIBUTING.md                          # Katkı Kılavuzu ve Topluluk Standartları
 ├── LICENSE                                  # MIT Lisansı
 ├── .gitignore                               # Temiz Depo Yapılandırması
-├── templates/
+├── tools/                                   # 🧰 Yerleşik Doğrulama CLI Araç Kiti
+│   ├── cli.py                               # Ana Komut Satırı Arayüzü (check-all, scan vb.)
+│   ├── spec_validator.py                    # Şartname Olgunluk ve Değişmez Analizcisi
+│   ├── guardrail_scanner.py                 # Kod Zafiyet ve Anti-Pattern Tarayıcısı
+│   └── eval_runner.py                       # Otonom Eval ve Property Koşucusu
+├── examples/                                # 🧪 Çalışan Referans Uygulamalar
+│   └── resilient-payment-service/           # Concurrency & Idempotency Destekli Ödeme Servisi
+│       ├── spec.json                        # Makine Tarafından Okunabilir Şartname
+│       ├── service.py                       # Şartnameye Uygun Referans Kod
+│       └── test_service.py                  # 50 Eşzamanlı Thread ve Property Testleri
+├── templates/                               # 📋 Mimari Şablonlar
 │   ├── spec-driven-template.md              # Şartname & Kontrat Tasarım Şablonu
 │   ├── guardrail-verification-checklist.md  # Deterministik Doğrulama Kontrol Listesi
 │   ├── agent-system-prompt-spec.md          # Otonom Ajan Sistem İstemi Şablonu
-│   └── eval-harness-example.py              # Somut Deterministik Evals & Test Harness Örneği
-└── docs/
+│   ├── mcp-server-contract.json             # Model Context Protocol (MCP) Arayüz Şablonu
+│   ├── eval-dataset-template.jsonl          # LLM Benchmark & Değerlendirme Veri Seti
+│   └── eval_harness_example.py              # Somut Deterministik Evals & Test Harness Örneği
+└── docs/                                    # 📚 Felsefi ve Mimari Dokümantasyon
     ├── 12-orkestrasyon-yasasi.md            # 12 Altın İlkenin Derin Felsefesi ve Açıklamaları
     ├── stokastik-kod-deterministik-filtre.md# Stokastik Yapay Zekâ vs. Deterministik Mühendislik
+    ├── baglam-muhendisligi-ve-mcp.md        # Bağlam Pencereleri, JIT Retrieval ve MCP
+    ├── tek-kisilik-unicornlar-ve-meta-muhendislik.md # 1-Person Unicorn ve Meta-Mühendislik
     └── vaka-calismasi-odeme-sistemi.md       # Detaylı Adım Adım Karşılaştırmalı Vaka Analizi
 ```
 

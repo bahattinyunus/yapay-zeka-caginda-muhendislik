@@ -1,0 +1,3 @@
+{"eval_id": "eval_001", "task": "Bakiye transfer fonksiyonu", "input": {"sender_balance": 100, "receiver_balance": 50, "amount": 30}, "expected_invariants": ["sender_balance == 70", "receiver_balance == 80", "total_balance_preserved == True"], "failure_mode_test": false}
+{"eval_id": "eval_002", "task": "Bakiye yetersiz transfer denemesi", "input": {"sender_balance": 20, "receiver_balance": 50, "amount": 50}, "expected_invariants": ["result == False", "sender_balance == 20", "receiver_balance == 50"], "failure_mode_test": true}
+{"eval_id": "eval_003", "task": "Negatif tutar enjeksiyonu", "input": {"sender_balance": 100, "receiver_balance": 50, "amount": -10}, "expected_invariants": ["result == False", "balance_mutation == False"], "failure_mode_test": true}
