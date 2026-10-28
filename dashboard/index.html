@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yapay Zekâ Çağında Mühendislik — Orkestrasyon Paneli</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-bright: #ffffff;
+      --accent: #58a6ff;
+      --green: #2ea043;
+      --purple: #8957e5;
+      --gold: #d29922;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 2rem; line-height: 1.6; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 3rem; }
+    h1 { color: var(--text-bright); font-size: 2.2rem; margin-bottom: 0.5rem; }
+    p.subtitle { color: var(--accent); font-size: 1.1rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+    .card h3 { color: var(--text-bright); margin-bottom: 0.8rem; font-size: 1.2rem; }
+    .stat { font-size: 2.2rem; font-weight: bold; color: var(--green); margin-bottom: 0.5rem; }
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+    .badge-green { background: #238636; color: #fff; }
+    .badge-purple { background: var(--purple); color: #fff; }
+    .badge-gold { background: var(--gold); color: #000; }
+    .law-item { margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); }
+    .law-item:last-child { border-bottom: none; }
+    .law-title { font-weight: 600; color: var(--text-bright); }
+    .interactive-box { background: #010409; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; font-family: monospace; font-size: 0.9rem; color: #7ee787; margin-top: 1rem; }
+    footer { text-align: center; margin-top: 4rem; color: #8b949e; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎼 Yapay Zekâ Çağında Mühendislik</h1>
+      <p class="subtitle">Kod Hamallığından Sistem Orkestrasyonuna — İnteraktif Gösterge Paneli</p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <span class="badge badge-green">DETERMİNİSTİK DOĞRULAMA</span>
+        <div class="stat">%100</div>
+        <h3>Şartname ve Kısıt Güvencesi</h3>
+        <p>Model kodunun geçmek zorunda olduğu 5 aşamalı sıfır güven filtre hattı (Zero Trust Pipeline).</p>
+      </div>
+
+      <div class="card">
+        <span class="badge badge-purple">AJAN TOPOLOJİSİ</span>
+        <div class="stat">4 Rol</div>
+        <h3>Bilişsel İş Bölümü</h3>
+        <p>Mimar (Planner), Kodlayıcı (Worker), Red Team (Saldırgan) ve Doğrulayıcı (Verifier) döngüsü.</p>
+      </div>
+
+      <div class="card">
+        <span class="badge badge-gold">KALDIRAÇ ETKİSİ</span>
+        <div class="stat">50x</div>
+        <h3>Tek Kişilik Mimari Güç</h3>
+        <p>Şartname tasarımı ve otonom test hatlarıyla tek mühendisin kurumsal orkestrasyon kapasitesi.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 2rem;">
+      <h3>📜 12 Orkestrasyon Yasası (Öne Çıkanlar)</h3>
+      <div class="law-item">
+        <div class="law-title">1. Yasa: Şartname Önceliği İlkesi</div>
+        <div>Tasarımı ve sınırları matematiksel olarak çizilmemiş işe tek satır kod ürettirilemez.</div>
+      </div>
+      <div class="law-item">
+        <div class="law-title">2. Yasa: Doğrulama Bağımsızlığı İlkesi</div>
+        <div>Kodu üreten akıl ile denetleyen mekanizma asla aynı olamaz (Olasılıksal kod vs. Deterministik test).</div>
+      </div>
+      <div class="law-item">
+        <div class="law-title">6. Yasa: Kendi Kendini İyileştiren Döngü İlkesi</div>
+        <div>Model hata yaptığında insan kodu elle düzeltmez; hata testi modele geri beslenir.</div>
+      </div>
+      <div class="law-item">
+        <div class="law-title">12. Yasa: İrade Mühendistedir</div>
+        <div>Yapay zekâ motordur; direksiyon, kısıtlar ve nihai sorumluluk daima insandadır.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>⚡ Hızlı Terminal Komutları</h3>
+      <div class="interactive-box">
+        # Tüm sistemi denetleyin:<br>
+        python -m tools.cli check-all<br><br>
+        # Ajan orkestrasyon motorunu başlatın:<br>
+        python examples/agent_workflow_orchestrator/workflow.py
+      </div>
+    </div>
+
+    <footer>
+      <p>Yapay Zekâ Çağında Mühendislik — Açık Kaynaklı Manifesto ve Sistem Toolkit'i (MIT Lisansı)</p>
+    </footer>
+  </div>
+</body>
+</html>

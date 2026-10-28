@@ -6,6 +6,7 @@
 [![12 Yasa](https://img.shields.io/badge/Felsefe-12%20Orkestrasyon%20Yasas%C4%B1-gold.svg)](docs/12-orkestrasyon-yasasi.md)
 [![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD-Passing-success.svg)](.github/workflows/ci.yml)
 [![CLI Toolkit](https://img.shields.io/badge/CLI%20Ara%C3%A7lar%C4%B1-v1.0.0-blueviolet.svg)](#-orkestrasyon-cli-ve-doğrulama-araç-seti)
+[![İnteraktif Dashboard](https://img.shields.io/badge/G%C3%B6sterge%20Paneli-Canl%C4%B1-ff69b4.svg)](dashboard/index.html)
 [![Topluluk](https://img.shields.io/badge/Topluluk-GitHub%20Discussions-orange.svg)](#-katkıda-bulunma-ve-topluluk)
 
 ---
@@ -357,7 +358,13 @@ python -m tools.cli scan-guardrails .
 # 3. 1.000 iterasyonluk deterministik eval ve property testini koşturun:
 python -m tools.cli run-evals
 
-# 4. Tüm kapıları (Spec + Guardrails + Evals) tek komutla çalıştırın:
+# 4. Mikroservis gecikme ve işlem hızını benchmark edin:
+python -m tools.cli benchmark
+
+# 5. Kapsamlı sistem denetim raporu (Markdown) oluşturun:
+python -m tools.cli report AUDIT_REPORT.md
+
+# 6. Tüm kapıları (Spec + Guardrails + Evals + Benchmark) tek komutla çalıştırın:
 python -m tools.cli check-all
 ```
 
@@ -437,11 +444,16 @@ Yapay zekâ çağında ayakta kalmak isteyen bir mühendisin başucunda durması
 │   ├── spec_validator.py                    # Şartname Olgunluk ve Değişmez Analizcisi
 │   ├── guardrail_scanner.py                 # Kod Zafiyet ve Anti-Pattern Tarayıcısı
 │   └── eval_runner.py                       # Otonom Eval ve Property Koşucusu
+├── dashboard/                               # 📊 İnteraktif Web Gösterge Paneli
+│   └── index.html                           # Tek Dosyalık Görsel Yönetim ve Yasalar Arayüzü
 ├── examples/                                # 🧪 Çalışan Referans Uygulamalar
-│   └── resilient-payment-service/           # Concurrency & Idempotency Destekli Ödeme Servisi
-│       ├── spec.json                        # Makine Tarafından Okunabilir Şartname
-│       ├── service.py                       # Şartnameye Uygun Referans Kod
-│       └── test_service.py                  # 50 Eşzamanlı Thread ve Property Testleri
+│   ├── resilient-payment-service/           # Concurrency & Idempotency Destekli Ödeme Servisi
+│   │   ├── spec.json                        # Makine Tarafından Okunabilir Şartname
+│   │   ├── service.py                       # Şartnameye Uygun Referans Kod
+│   │   └── test_service.py                  # 50 Eşzamanlı Thread ve Property Testleri
+│   └── agent-workflow-orchestrator/         # Çoklu Ajan Bilişsel İş Akışı Motoru
+│       ├── README.md                        # Ajan Mimarisi Detayları
+│       └── workflow.py                      # Mimar -> Coder -> RedTeam -> Verifier Döngüsü
 ├── templates/                               # 📋 Mimari Şablonlar
 │   ├── spec-driven-template.md              # Şartname & Kontrat Tasarım Şablonu
 │   ├── guardrail-verification-checklist.md  # Deterministik Doğrulama Kontrol Listesi
@@ -453,6 +465,9 @@ Yapay zekâ çağında ayakta kalmak isteyen bir mühendisin başucunda durması
     ├── 12-orkestrasyon-yasasi.md            # 12 Altın İlkenin Derin Felsefesi ve Açıklamaları
     ├── stokastik-kod-deterministik-filtre.md# Stokastik Yapay Zekâ vs. Deterministik Mühendislik
     ├── baglam-muhendisligi-ve-mcp.md        # Bağlam Pencereleri, JIT Retrieval ve MCP
+    ├── eval-gudumlu-gelistirme-edd.md       # Eval-Driven Development (EDD) Metodolojisi
+    ├── guvenlik-ve-model-zehirlenmesi.md    # Ajan Tehdit Modellemesi ve Zero-Trust Savunma
+    ├── yazilim-ekonomisi-ve-marjinal-maliyet.md # Sıfır Marjinal Maliyet Çağında Mühendislik Değeri
     ├── tek-kisilik-unicornlar-ve-meta-muhendislik.md # 1-Person Unicorn ve Meta-Mühendislik
     └── vaka-calismasi-odeme-sistemi.md       # Detaylı Adım Adım Karşılaştırmalı Vaka Analizi
 ```

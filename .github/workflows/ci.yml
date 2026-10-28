@@ -17,19 +17,19 @@ jobs:
       with:
         python-version: '3.12'
 
-    - name: 1. Sartname Dogrulama (Spec Validation)
+    - name: 1. Tum Sistem Denetimi (Spec + Guardrails + Evals + Benchmark)
       run: |
-        python -m tools.cli validate-spec templates/spec-driven-template.md
+        python -m tools.cli check-all
 
-    - name: 2. Kod Korkuluk Taramasi (Guardrails Scan)
+    - name: 2. Coklu Ajan Orkestrasyon Motoru Testi
       run: |
-        python -m tools.cli scan-guardrails .
+        python examples/agent-workflow-orchestrator/workflow.py
 
-    - name: 3. Eval ve Property Testleri Kosumu
-      run: |
-        python -m tools.cli run-evals
-
-    - name: 4. Ornek Servis Birim ve Concurrency Testleri
+    - name: 3. Ornek Odeme Servisi Concurrency Testleri
       run: |
         cd examples/resilient-payment-service
         python -m unittest test_service.py
+
+    - name: 4. Sistem Denetim Raporu Uretimi
+      run: |
+        python -m tools.cli report AUDIT_REPORT.md

@@ -3,6 +3,7 @@
 Deterministik Korkuluk ve Anti-Pattern Tarayıcı (Guardrail Scanner)
 Yapay zekâ modellerinin ürettiği koddaki tipik amelelik ve güvenlik zafiyeti
 kalıntılarını kaynak kod üzerinde statik analizle tespit eder.
+Desteklenen İstisna Formatı: # noqa veya // nosec
 """
 
 import sys
@@ -62,6 +63,10 @@ def scan_file(file_path: str) -> List[Dict[str, Any]]:
         return findings
         
     for line_num, line in enumerate(lines, 1):
+        # Satır düzeyinde istisna (suppression) kontrolü
+        if "# noqa" in line or "// nosec" in line or "# nosec" in line:
+            continue
+
         for rule in PATTERNS:
             if re.search(rule["regex"], line):
                 findings.append({
